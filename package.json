@@ -1,0 +1,23 @@
+{
+  "name": "hooks-server",
+  "version": "1.0.0",
+  "description": "my description",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git_repo_link"
+  },
+  "keywords": [
+    "key1",
+    "key2"
+  ],
+  "author": "YupiOpi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pm2": "^3.5.1"
+  }
+}
