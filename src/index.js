@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 // connect to Mongo daemon
 mongoose
   .connect(
-      process.env.DATABASE_URL,
+      String(process.env.DATABASE_URL),
     { useNewUrlParser: true }
   )
   .then(() => console.log('MongoDB Connected'))
