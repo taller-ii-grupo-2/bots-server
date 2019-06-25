@@ -12,6 +12,14 @@ services:
     volumes:
     - ./:/app # <host-directory>:<container-directory> this says map the current directory from your system to the /app directory in the docker container
     command: "npx pm2 start ecosystem.config.js --no-daemon" # The command docker will execute when starting the container, this command is not allowed to exit, if it does your container will stop
-
+    environment:
+        #        DATABASE_URL: mongodb://mongo:27017/expressmongo
+        DATABASE_URL: mongodb+srv://my_username:my_usernamepass@hypechat-bots-dtsmb.mongodb.net/test?retryWrites=true&w=majority
+    
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
 networks:
   app:
