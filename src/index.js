@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 // set the port of our application
 // // process.env.PORT lets the port be set by Heroku
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => res.send('Live modifiable now? Huh, amazing! Hello World! This time, from a NODE server! Now even from docker!!! wooooaa'))
 
