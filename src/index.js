@@ -14,20 +14,15 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // connect to Mongo daemon
-// mongoose
-//   .connect(
-//       process.env.DATABASE_URL,
-//     { useNewUrlParser: true }
-//   )
-//   .then(() => console.log('MongoDB Connected'))
-//   .catch(err => console.log(err));
-
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true});
-         mongoose.connection.once('open', function(){
-         console.log('Conection has been made!');
-             }).on('error', function(error){
-          console.log('Error is: ', error);
-           });
+console.log(process.env.DATABASE_URL);
+console.log("no see database url above? Somethings wrong...");
+mongoose
+  .connect(
+      process.env.DATABASE_URL,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 
 const Cat = mongoose.model('Cat', { name: String });
 
