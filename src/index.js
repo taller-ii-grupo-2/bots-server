@@ -35,7 +35,7 @@ var userSchema = new mongoose.Schema({
   time_till_end_of_mute: Number
 });
 
-var User = mongoose.model('User', UserSchema);
+var User = mongoose.model('User', userSchema);
 
 function setMuteTime(mail, seconds){
   let d = new Date();
