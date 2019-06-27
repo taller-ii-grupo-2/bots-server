@@ -9,6 +9,9 @@ const app = express()
 // // process.env.PORT lets the port be set by Heroku
 const port = process.env.PORT || 3000;
 
+//const server_url = 'http://192.168.100.106:5000';
+const server_url = 'https://hypechatgrupo2-app-server-stag.herokuapp.com/';
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -27,16 +30,22 @@ mongoose
   .catch(err => console.log(err));
 
 // My Schemas
-const UserSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema({
   mail: String,
-  timestamp_till_end_of_mute: Date
+  time_till_end_of_mute: Number
 });
 
 var User = mongoose.model('User', UserSchema);
 
+function setMuteTime(mail, seconds){
+  let d = new Date();
+  time_till_end_of_mute = Math.floor(d.getTime()/1000) + seconds;
+  var a_user = new User({mail:mail, timestamp_till_end_of_mute: time_till_end_of_mute})
+}
+
 // HTTP request functions
 function get_to_server(endpoint, callback){
-  url = String('http://192.168.100.106:5000' + endpoint);
+  url = String(server_url + endpoint);
   request.get(
        url,
        function (error, response, body) {
@@ -48,7 +57,7 @@ function get_to_server(endpoint, callback){
 }
 
 function post_to_server(endpoint, callback){
-  url = String('http://192.168.100.106:5000' + endpoint);
+  url = String(server_url + endpoint);
   request.post(
       url,
       { json: { key: 'value' } },
@@ -74,6 +83,12 @@ app.post('/', (req, res) =>{
   post_to_server('', function(response){
     res.status(200).send(response);
   });
+})
+
+app.get('/get_db', (req, res) =>{
+  var User = mongoose.model('User', UserSchema);
+//  User.find
+  res.status(200).send(response);
 })
 
 //app.get('/', (req, res) => res.send('Live modifiable now? Huh, amazing! Hello World! This time, from a NODE server! Now even from docker!!! wooooaa'))
