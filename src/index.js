@@ -9,8 +9,8 @@ const app = express()
 // // process.env.PORT lets the port be set by Heroku
 const port = process.env.PORT || 3000;
 
-//const server_url = 'http://192.168.100.106:5000';
-const server_url = 'https://hypechatgrupo2-app-server-stag.herokuapp.com/';
+//const server_url = 'http://192.168.2.110:5000';
+//const server_url = 'https://hypechatgrupo2-app-server-stag.herokuapp.com';
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -44,8 +44,9 @@ function setMuteTime(mail, seconds){
 }
 
 // HTTP request functions
-function get_to_server(endpoint, callback){
+/*function get_to_server(endpoint, callback){
   url = String(server_url + endpoint);
+  console.log('getting to url: ' + url);
   request.get(
        url,
        function (error, response, body) {
@@ -68,6 +69,7 @@ function post_to_server(endpoint, callback){
          callback(response.body);
       });
 }
+*/
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -102,10 +104,10 @@ app.get('/tito', (req, res) => {
 
 app.post('/tito', (req, res) => {
   console.log('in /tito');
-  let help_text = "Welcome to Tito help!\n";
-  help_text += "@tito help: muestra los comandos disponibles\n";
-  help_text += "@tito info: muestra información del canal: integrantes, cantidad de mensajes, etc\n";
-  help_text += "@tito mute <n>: desactiva respuestas por n segundos\n";
+  let help_text = "Welcome to Tito help!\n\n";
+  help_text += "@tito help: muestra los comandos disponibles\n\n";
+  help_text += "@tito info: muestra información del canal: integrantes, cantidad de mensajes, etc\n\n";
+  help_text += "@tito mute <n>: desactiva respuestas por n segundos\n\n";
   help_text += "@tito me: muestra información del usuario que envia el mensaje.";
 
   let arg = req.body.arg;
@@ -124,13 +126,10 @@ app.post('/tito', (req, res) => {
     console.log('in info');
     let organization_name = req.body.organization_name;
     let channel_name = req.body.channel_name;
+    let channel_info = req.body.channel_info;
 
-    let endpoint = '/bots/' + organization_name + '/' + channel_name
-
-    get_to_server(endpoint, function(response){
-      res.status(200).send(response);
-    })
-
+    res.status(200).send(channel_info);
+    
   } else if (arg.split(' ')[0] == 'mute'){
 
     console.log('in mute');
@@ -143,12 +142,10 @@ app.post('/tito', (req, res) => {
   } else if (arg == 'me'){
 
     let user_mail = req.body.user_mail
-
-    let endpoint = '/bots/users/' + user_mail
-
-    get_to_server(endpoint, function(response){
-      res.status(200).send(response);
-    })
+    let user_info = req.body.user_info
+    console.log('user_mail received: ' + user_mail);
+    console.log('user_info received: ' + user_info);
+    res.status(200).send(user_info);
   }
 });
 
